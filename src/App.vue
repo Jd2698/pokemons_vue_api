@@ -16,7 +16,7 @@
 
 <style scoped>
 nav a.router-link-exact-active {
-	color: #43ba83;
+	color: var(--main-color-text);
 	/* #334c5c */
 }
 

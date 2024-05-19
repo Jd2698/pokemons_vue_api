@@ -1,3 +1,3 @@
 <template>
-	<h4>This is the home</h4>
+	<h1 class="my-8 text-[--main-color-text]">This is the home:</h1>
 </template>
