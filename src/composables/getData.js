@@ -14,7 +14,9 @@ export const useGetData = () => {
 		} catch (e) {
 			error.value = 'Error de servidor'
 		} finally {
-			loading.value = false
+			setTimeout(() => {
+				loading.value = false
+			}, 550)
 		}
 	}
 

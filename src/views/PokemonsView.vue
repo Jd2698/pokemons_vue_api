@@ -1,6 +1,7 @@
 // npm i axios
 <script setup>
 	import { ref } from "vue";
+	import Spinner from "@/components/Spinner.vue";
 	import { RouterLink } from "vue-router";
 
 	import { useGetData } from "@/composables/getData";
@@ -12,16 +13,15 @@
 
 <template>
 	<h1 class="my-8 text-[--main-color-text]">Pokemons:</h1>
+	<Spinner v-if="loading" />
 
-	<p v-if="loading">Cargando...</p>
-	<div class="" v-if="error">Error: {{ error }}</div>
+	<div v-if="error">Error: {{ error }}</div>
 	<div v-if="data">
 		<ul class="container-grid gap-6">
-			<li v-for="poke in data.results" :key="poke.id" class="w-[100px]">
-				<span>{{poke.name}}</span>
-				<!-- <router-link class="text-white" :to="`/pokemons/${poke.name}`">{{
-                    poke.name
-                }}</router-link> -->
+			<li v-for="pokemon in data.results" :key="pokemon.id" class="w-[100px]">
+				<router-link :to="`/pokemon/${pokemon.name}`" class="hover:text-[--main-color-text]">{{
+                    pokemon.name
+                }}</router-link>
 			</li>
 		</ul>
 		<div class="mt-8 flex gap-4">
