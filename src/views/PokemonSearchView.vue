@@ -19,8 +19,9 @@
 	const router = useRouter();
 
 	const pokemonName = ref(null);
-	const pokemons = ref([]);
+	const pokemons = ref(null);
 	const pokemon = ref(null);
+	const pokemonLoading = ref(false);
 
 	const searchPokemon = async (event) => {
 		if (pokemonName.value) {
@@ -28,9 +29,9 @@
 			await getData(url);
 
 			pokemons.value = data.value.results.filter((pokemon) =>
-				pokemon.name.includes(pokemonName.value)
+				pokemon.name.includes(pokemonName.value.toLowerCase())
 			);
-			console.log(pokemons.value);
+			// console.log(pokemons.value);
 		}
 	};
 
@@ -42,11 +43,32 @@
 
 	const changePokemon = async (url) => {
 		const { data } = await axios.get(url);
+		pokemonLoading.value = false;
 		pokemon.value = data;
 		setIsOpen(true);
+
+		setTimeout(() => {
+			pokemonLoading.value = true;
+		}, 500);
 	};
 </script>
 <template>
+	<div class="mt-6 text-end">
+		<input class="h-8 bg-[#eee] focus:outline-none text-black p-2 movil:w-full tablet:w-[240px]" type="search" placeholder="Search a pokemon" @keyup.enter="searchPokemon" v-model="pokemonName" autofocus />
+	</div>
+
+	<div v-if="!pokemons" class="text-center text-3xl mt-8">
+		Have to look for one
+	</div>
+
+	<template v-if="pokemons">
+		<ul class="container-grid py-4">
+			<li class="border-b-2 pb-2 text-center" v-for="pokemon in pokemons" :key="pokemon.name">
+				<button @click="changePokemon(pokemon.url)" class="w-full hover:text-[--main-color-text]">{{pokemon.name.replace(/-/g, ' ')}}</button>
+			</li>
+		</ul>
+	</template>
+
 	<TransitionRoot appear :show="isOpen" as="template">
 		<Dialog as="div" @close="closeModal" class="relative z-10">
 			<TransitionChild as="template" enter="duration-300 ease-out" enter-from="opacity-0" enter-to="opacity-100" leave="duration-200 ease-in" leave-from="opacity-100" leave-to="opacity-0">
@@ -60,8 +82,10 @@
 							<DialogTitle as="h3" class="text-lg font-medium leading-6 text-white">
 								{{pokemon.name.toUpperCase()}}
 							</DialogTitle>
-							<div class="mt-2">
-								<img class="block w-[250px] m-auto" :src="pokemon.sprites.front_shiny" :alt="pokemon.name">
+							<div class="mt-2 h-[250px] relative overflow-hidden">
+								<Spinner v-show="!pokemonLoading" />
+
+								<img v-show="pokemonLoading" class="block h-full m-auto" :src="pokemon.sprites.front_shiny" :alt="pokemon.name">
 							</div>
 
 							<div class="flex justify-end">
@@ -75,16 +99,4 @@
 			</div>
 		</Dialog>
 	</TransitionRoot>
-
-	<div class="mt-6 text-end">
-		<input class="h-8 bg-[#eee] focus:outline-none text-black p-2" type="search" placeholder="Search a pokemon" @keyup.enter="searchPokemon" v-model="pokemonName" autofocus />
-	</div>
-
-	<template v-if="pokemons">
-		<ul class="container-grid py-4">
-			<li class="border-b-2 pb-2 text-center" v-for="pokemon in pokemons" :key="pokemon.name">
-				<button @click="changePokemon(pokemon.url)" class="w-full hover:text-[--main-color-text]">{{pokemon.name.replace(/-/g, ' ')}}</button>
-			</li>
-		</ul>
-	</template>
 </template>
