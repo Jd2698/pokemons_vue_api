@@ -6,3 +6,22 @@
 	padding: 2rem;
 	font-weight: normal;
 }
+
+.container-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, 200px);
+	justify-content: center;
+	gap: 2.5rem;
+}
+button:disabled {
+	color: rgb(88, 86, 86);
+}
+
+nav a.router-link-exact-active {
+	color: var(--main-color-text);
+	/* #334c5c */
+}
+
+nav a.router-link-exact-active:hover {
+	background-color: transparent;
+}

@@ -2,6 +2,7 @@
 <script setup>
 	import { ref } from "vue";
 	import Spinner from "@/components/Spinner.vue";
+	// import PokemonList from "@/components/PokemonList.vue";
 	import { RouterLink } from "vue-router";
 
 	import { useGetData } from "@/composables/getData";
@@ -12,14 +13,15 @@
 </script>
 
 <template>
-	<h1 class="my-8 text-[--main-color-text]">Pokemons:</h1>
+	<h1 class="mt-10 text-[--main-color-text]">Pokemons:</h1>
 	<Spinner v-if="loading" />
 
 	<div v-if="error">Error: {{ error }}</div>
 	<div v-if="data">
-		<ul class="container-grid gap-6">
-			<li v-for="pokemon in data.results" :key="pokemon.id" class="w-[100px]">
-				<router-link :to="`/pokemon/${pokemon.name}`" class="hover:text-[--main-color-text]">{{
+		<!-- <PokemonList/> -->
+		<ul class="container-grid py-4">
+			<li v-for="pokemon in data.results" :key="pokemon.id" class="border-b-2 pb-2 text-center">
+				<router-link :to="`/pokemon/${pokemon.name}`" class="block w-full hover:text-[--main-color-text]">{{
                     pokemon.name
                 }}</router-link>
 			</li>
@@ -34,14 +36,3 @@
 		</div>
 	</div>
 </template>
-
-<style scoped>
-.container-grid {
-	display: grid;
-	grid-template-columns: repeat(auto-fill, 100px);
-	justify-content: center;
-}
-button:disabled {
-	color: rgb(88, 86, 86);
-}
-</style>
