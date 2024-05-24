@@ -14,6 +14,7 @@
 
 			<RouterLink to="/" class="hover:border-b border-[--main-color-text]">Home</RouterLink>
 			<RouterLink to="/pokemons" class="hover:border-b border-[--main-color-text]">Pokemons</RouterLink>
+			<RouterLink to="/favoritos" class="hover:border-b border-[--main-color-text]">Favorites</RouterLink>
 			<RouterLink to="/pokemon/search" class="hover:border-b border-[--main-color-text]">Search</RouterLink>
 		</nav>
 	</header>

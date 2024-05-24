@@ -21,7 +21,7 @@
 		<!-- <PokemonList/> -->
 		<ul class="container-grid py-4">
 			<li v-for="pokemon in data.results" :key="pokemon.id" class="border-b-2 pb-2 text-center">
-				<router-link :to="`/pokemon/${pokemon.name}`" class="block w-full hover:text-[--main-color-text]">{{
+				<router-link :to="`/pokemons/${pokemon.name}`" class="block w-full hover:text-[--main-color-text]">{{
                     pokemon.name
                 }}</router-link>
 			</li>
